@@ -1,0 +1,89 @@
+* {
+  min-height: 0;
+  min-width: 0;
+}
+body,
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.page {
+  height: 100%;
+  direction: rtl;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font-family: $--font-primary;
+}
+
+a {
+  text-decoration: unset;
+  color: $--color-primary;
+}
+
+.el-header {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  @media screen and (max-width: 550px) {
+    padding: 0 10px;
+  }
+}
+
+.el-message {
+  direction: rtl;
+  .el-message__content {
+    padding-right: 0.5rem;
+  }
+}
+
+.el-footer {
+  padding: 0;
+}
+
+.el-main > div:first-child {
+  min-height: calc(100vh - 168px);
+}
+
+.el-tooltip__popper.is-dark {
+  direction: rtl;
+  max-width: 25rem;
+}
+
+.el-alert__content {
+  word-break: break-word;
+}
+
+.el-input__suffix {
+  left: 5px;
+  right: auto;
+}
+
+.el-input--suffix .el-input__inner {
+  padding-left: 30px;
+  padding-right: 15px;
+}
+
+.el-pagination .btn-prev i, .el-pagination .btn-next i {
+  transform: rotate(180deg);
+}
+
+
+@media screen and (max-width: 430px) {
+  .el-message {
+    min-width: 290px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .el-tooltip__popper.is-dark {
+    max-width: 15rem;
+  }
+}
