@@ -1,11 +1,21 @@
 .form{
     width : 20rem;
-    height: 23rem;
+    // height: 23rem;
 }
 .form-background{
     background-color: #f8f8f8;
 }
 .el-button{
-    width: 15rem;
+    width: 17.5rem;
 }
-
+.link{
+    color: #409EFF;
+}
+.el-form-item__error {
+    right:0;
+    left: unset;
+}
+.error{
+    font-size: 12px;
+    color: #F56C6C;
+}
