@@ -29,11 +29,14 @@ class API {
     arrayOfEntity.forEach(this.createEntity.bind(this))
   }
   createBasicCRUDEndpoints ({ name }) {
+    var headers= {
+      'Access-Control-Allow-Origin' : '*'
+    }
     let endpoints = {}
     const resourceURL = `${this.url}/${name}`
     endpoints.getAll = ({ query } = {}) => _axios.get(resourceURL, { params: query }).then(this.handleSuccess)
     endpoints.getOne = ({ id }) => _axios.get(`${resourceURL}${id ? `/${id}/` : ''}`).then(this.handleSuccess)
-    endpoints.create = (toCreate) => _axios.post(resourceURL, toCreate).then(this.handleSuccess)
+    endpoints.create = (toCreate) => _axios.post(resourceURL,toCreate).then(this.handleSuccess)
     endpoints.up= (toUpdate) => _axios.put(resourceURL, toUpdate).then(this.handleSuccess)
     endpoints.update = ({ id, toUpdate }) => _axios.put(`${resourceURL}${id ? `/${id}` : ''}`, toUpdate).then(this.handleSuccess)
     endpoints.patch = ({ id, toPatch }) => _axios.patch(`${resourceURL}${id ? `/${id}` : ''}`, toPatch).then(this.handleSuccess)

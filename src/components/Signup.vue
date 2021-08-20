@@ -71,6 +71,8 @@ export default {
     return{
 
       labelPosition: 'top',
+      usernameError: false,
+      emailError: false,
 
       ruleForm: {
         username: '',
@@ -92,6 +94,11 @@ export default {
   },
 
   methods:{
+    ...mapActions([
+      'handleRequest',
+      'setToken',
+      'setUsername',
+    ]),
 
     isValidEmail:function(email)  {
       var emailTest=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -102,13 +109,43 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert('submit!');
-          // this.sendRequest();
+          this.sendRequest();
         }else{
           return false;
         }
       });
 
     },
+
+    clearErrors(){
+      this.usernameError = false
+      this.emailError = false
+    },
+
+    sendRequest:function(){
+      this.clearErrors();
+      let formData=new FormData();
+      formData.append('email',this.ruleForm.email);
+      formData.append('password',this.ruleForm.password);
+      formData.append('username',this.ruleForm.username);
+      this.handleRequest({
+        name:'api/account/register/',
+        action:'create',
+        data:formData,
+      }).then((res)=>{
+        this.setTokens(res.token); 
+        //router to dashboard      
+      }).catch((res)=>{ 
+        if(Object.prototype.hasOwnProperty.call(res,'username')){
+          this.usernameError=true;
+        }
+        if(Object.prototype.hasOwnProperty.call(res,'email')){           
+            this.emailError=true;            
+        }
+      })
+    },
+
+
 
   }
 }
