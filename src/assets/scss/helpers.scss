@@ -190,6 +190,9 @@ video {
   &.column-direction {
     flex-direction: column;
   }
+  &.row-direction {
+    flex-direction: row;
+  }
   &.wrap {
     flex-wrap: wrap;
   }

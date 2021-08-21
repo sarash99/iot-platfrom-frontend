@@ -1,8 +1,8 @@
 import API from '../api/api-class'
 const protocol = 'http:'
 // Smart api calls
-const myAPI = new API({ url: `${protocol}//sarash99.pythonanywhere.com/` })
-// const myAPI = new API({ url: `${protocol}//94.184.176.121`})
+// const myAPI = new API({ url: `${protocol}//sarash99.pythonanywhere.com/api` })
+const myAPI = new API({ url: `${protocol}//127.0.0.1:8000/api` })
 
 export const handleRequestResponse = async ({ commit }, { mutation, request }) => {
   commit(mutation, await request)
