@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import login from '../components/Login.vue'
 import signup from '../components/Signup.vue'
 import account from '../components/Account.vue'
+import channel_view from '../components/ChannelView.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/account',
     name: 'account',
     component: account
+  },
+  {
+    path: '/channel-view',
+    name: 'channel-view',
+    component: channel_view
   },
 ]
 

@@ -38,6 +38,7 @@ export const setUsername = async ({ commit }, username) => {
   commit('SET_USERNAME', username)
 }
 export const setToken = ({ commit }, token) => {
+  localStorage.setItem('token', token)
   commit('SET_TOKEN', token)
 }
 

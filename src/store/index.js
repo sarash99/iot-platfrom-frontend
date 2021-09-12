@@ -10,7 +10,7 @@ const getDefaultState = () => {
   return {
     tokenScope: '',
     username: '',
-    token: ''
+    token: localStorage.getItem('token') || ''
   }
 }
 

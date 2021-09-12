@@ -3,14 +3,13 @@
 class="topnav" 
 mode="horizontal" 
 @select="handleSelect" 
-background-color="#A8CFF7"
-text-color="black">
+background-color="rgb(98, 169, 242)"
+text-color="white">
   <el-submenu index="1">
-    <template slot="title">username</template>
-    <el-menu-item index="1-1">item one</el-menu-item>
-    <el-menu-item index="1-2">item two</el-menu-item>
+    <template slot="title">{{username}}</template>
+    <el-menu-item index="1-1">{{$t('logout')}}</el-menu-item>
   </el-submenu>
-  <el-menu-item index="2" class="webname">webname</el-menu-item>
+  <el-menu-item index="2" class="webname">{{$t('iot_platform')}}</el-menu-item>
 
 </el-menu>
 </template>
@@ -18,60 +17,56 @@ text-color="black">
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-//   data () {
-//     return {
-//       windowWidth: window.innerWidth
-//     }
-//   },
-//   computed: {
-//     ...mapGetters([
-//       'username',
-//       'checkUsername'
-//     ])
-//   },
-//   methods: {
-//     ...mapActions([
-//       'setUsername',
-//       'handleRequest',
-//       'setFullscreen',
-//       'setCheckUsername'
-//     ]),
-//     handleLogout () {
-//       window.localStorage.removeItem('token')
-//       this.setUsername('')
-//       this.setFullscreen(true)
-//       this.$router.push({ name: 'Dashboard', params: {showAlert: false} })
-//     },
-//     getData () {
-//       this.setCheckUsername(false)
-//       this.handleRequest({
-//         name: 'users/valid/',
-//         action: 'getAll'
-//       }).then((res) => {
-//         this.setUsername(res.username)
-//         if (this.$route.name === 'Dashboard') {
-//           this.$router.push({ name: 'Account' })
-//         }
-//       }).catch(() => {
-//         if (this.$route.name !== 'Dashboard' && this.$route.name !== 'Advertisements' && this.$route.name !== 'View') {
-//           this.$router.push({ name: 'Dashboard', params: {showAlert: false} })
-//         }
-//         window.localStorage.removeItem('token')
-//       })
-//       .finally(() => {
-//         this.setFullscreen(false)
-//         this.setCheckUsername(true)
-//       })
-//     },
-//     getWidthOnResize () {
-//       this.windowWidth = window.innerWidth
-//     }
-//   },
-//   created () {
-//     window.addEventListener('resize', this.getWidthOnResize)
-//   },
-//   destroyed () {
-//     window.removeEventListener('resize', this.getWidthOnResize)
-//   },
+  data () {
+    return {
+      windowWidth: window.innerWidth
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'username',
+      'token'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'setUsername',
+      'handleRequest',
+    ]),
+    handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+        if(key==="1-1"){
+          this.handleLogout();
+        }
+    },
+
+    handleLogout () {
+      window.localStorage.removeItem('token')
+      this.setUsername('')
+      this.$router.push({ name: 'login' })
+    },
+    getData () {
+      this.handleRequest({
+        name: 'account/detail/',
+        action: 'getAll'
+      }).then((res) => {
+        this.setUsername(res.username)
+      }).catch(() => {
+        window.localStorage.removeItem('token')
+        this.$router.push({ name: 'login' })
+      })
+    },
+
+  },
+  mounted(){
+    if(this.token){
+      if(!this.username) {
+        this.getData(); 
+      }                
+    }else{
+      this.$router.push({ name: 'login' })
+    }
+  }
+
 }
 </script>

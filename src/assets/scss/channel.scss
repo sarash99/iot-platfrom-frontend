@@ -7,8 +7,39 @@
         height: 40px;
         margin-top: 20px;
     }
+
+    .el-button--primary {
+        padding: 0px;
+    }
+
+    .field_names{
+        display: inline-flex;
+        padding: 3px;
+        p{
+            margin-left: 1rem;
+        }
+    }
 }
 .channel{
     width:60rem;
     margin-bottom: 2rem;
+
+
+}
+.channel-view{
+    width: 70%;
+    position: relative;
+    right: 15%;
+    top: 7rem;    
+    display: flex;
+    flex-direction: column;
+    // .el-menu--horizontal > .el-menu-item {
+    //     float: inline-start;
+    // }
+    // .el-menu--horizontal > .el-submenu {
+    //     float: inline-start;
+    // }
+    .el-menu{
+        display: flex;
+    }
 }

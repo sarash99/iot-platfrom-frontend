@@ -4,7 +4,6 @@
   <el-form :label-position="labelPosition" label-width="100px" :model="ruleForm" :rules="rules" ref="ruleForm">
     <el-form-item prop="channel_name">
       <label>{{$t('channel_name')}}</label>
-      <p v-if="usernameError" class="error">{{$t('not_unique_username_error')}}</p>
       <el-input v-model="ruleForm.channel_name"></el-input>
     </el-form-item>
     <el-form-item>
@@ -62,8 +61,6 @@ export default {
     return{
 
       labelPosition: 'top',
-      usernameError: false,
-      emailError: false,
       blank_message:  this.$t('blank_field_error'),
 
       ruleForm: {
@@ -83,20 +80,12 @@ export default {
   methods:{
     ...mapActions([
       'handleRequest',
-      'setToken',
-      'setUsername',
     ]),
-
-    isValidEmail:function(email)  {
-      var emailTest=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-      return (emailTest).test(email)
-    },
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
-        //   this.sendRequest();
+          this.sendRequest();
         }else{
           return false;
         }
@@ -112,25 +101,25 @@ export default {
     sendRequest:function(){
       this.clearErrors();
       let formData=new FormData();
-      formData.append('email',this.ruleForm.email);
-      formData.append('password',this.ruleForm.password);
-      formData.append('username',this.ruleForm.username);
+      formData.append('channel_name',this.ruleForm.channel_name);
+      for(let i=0;i<this.ruleForm.fields.length;i++){
+        var field_name = 'field' + (i+1)
+        formData.append(field_name,this.ruleForm.fields[i]);
+      }
+      
       this.handleRequest({
-        name:'account/register/',
+        name:'channel/create-channel/',
         action:'create',
         data:formData,
       }).then((res)=>{
-        this.setToken(res.token); 
-        //router to dashboard      
-      }).catch((res)=>{ 
+        //router to dashboard 
+        alert('created')    
+        console.log(res) 
+        this.$emit('formInvisable')
 
-        if(Object.prototype.hasOwnProperty.call(res.response.data,'username')){
-          alert('no')
-          this.usernameError=true;
-        }
-        if(Object.prototype.hasOwnProperty.call(res.response.data,'email')){           
-            this.emailError=true;            
-        }
+      }).catch((res)=>{
+        alert('not created')    
+        console.log(res)
         
       })
     },

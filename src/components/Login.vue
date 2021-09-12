@@ -9,7 +9,7 @@
     </el-form-item>
     <el-form-item prop="password">
       <label>{{$t('password')}}</label>
-      <el-input v-model="ruleForm.password"></el-input>
+      <el-input v-model="ruleForm.password" type="password"></el-input>
     </el-form-item>
     <el-form-item class="mt-2-rem flexbox justify-center">
       <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('login') }}</el-button>
@@ -57,6 +57,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'username',
+      'token'
+    ])
+  },
 
   methods:{
     ...mapActions([
@@ -99,12 +105,9 @@ export default {
         action:'create',
         data:formData,
       }).then((res)=>{
-        this.setToken(res.token);     
-        this.setUsername(this.username);
-        // this.$router.push({ name: 'Account', params: {showAlert: true} });
-      }).catch((res)=>{
-
-        console.log(res)
+        this.setToken(res.token); 
+        this.$router.push({ name: 'account'});
+      }).catch(()=>{
         this.incorrect=true;
       })     
     }, 

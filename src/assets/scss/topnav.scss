@@ -3,6 +3,7 @@
     .webname{
         position: absolute;
         right:20px;
+        color: white;
     }
 }
 // .el-menu--horizontal > .el-menu-item {
@@ -15,9 +16,9 @@
 .el-menu--horizontal > .el-menu-item.is-active {
     border-bottom:0px !important;
 }
-// .el-menu--horizontal > .el-menu-item:not(.is-disabled):hover, .el-menu--horizontal > .el-menu-item:not(.is-disabled):focus {
-//     background-color: #A8CFF7 !important;
-// }
+.el-menu--horizontal > .el-menu-item:not(.is-disabled):hover, .el-menu--horizontal > .el-menu-item:not(.is-disabled):focus {
+    background-color: rgb(98, 169, 242) !important;
+}
 .el-submenu__title i {
-    color: black !important;
+    color: white !important;
 }

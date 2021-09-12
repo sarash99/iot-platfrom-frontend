@@ -14,7 +14,7 @@
     </el-form-item>
     <el-form-item prop="password">
       <label>{{$t('password')}}</label>
-      <el-input v-model="ruleForm.password"></el-input>
+      <el-input v-model="ruleForm.password" type="password"></el-input>
     </el-form-item>
     <el-form-item class="mt-2-rem flexbox justify-center">
       <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('confirm') }}</el-button>
@@ -110,7 +110,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
           this.sendRequest();
         }else{
           return false;
@@ -135,12 +134,12 @@ export default {
         action:'create',
         data:formData,
       }).then((res)=>{
-        this.setToken(res.token); 
-        //router to dashboard      
+        this.setToken(res.token);     
+        this.setUsername(this.ruleForm.username);
+        this.$router.push({ name: 'account'});     
       }).catch((res)=>{ 
 
         if(Object.prototype.hasOwnProperty.call(res.response.data,'username')){
-          alert('no')
           this.usernameError=true;
         }
         if(Object.prototype.hasOwnProperty.call(res.response.data,'email')){           
