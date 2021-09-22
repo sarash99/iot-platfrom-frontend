@@ -1,5 +1,5 @@
 /* theme color */
-$--color-primary: #556c38;
+$--color-primary: #409EFF;
 $--color-primary-light: #d3e0c3;
 $--color-primary-dark: #280680;
 $--color-gray-light: #ECEFF1;
@@ -31,9 +31,10 @@ $--xl: 1920px !default;
 // @import "vendor/fontawesome/fa-solid.scss";
 @import "~element-ui/packages/theme-chalk/src/index";
 // @import "~element-ui/packages/theme-chalk/src/display";
+@import "global";
+@import "var";
 @import "fonts";
 @import "helpers";
-@import "global";
 @import "form";
 @import "topnav";
 @import "channel";

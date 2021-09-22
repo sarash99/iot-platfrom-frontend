@@ -9,7 +9,7 @@ text-color="white">
     <template slot="title">{{username}}</template>
     <el-menu-item index="1-1">{{$t('logout')}}</el-menu-item>
   </el-submenu>
-  <el-menu-item index="2" class="webname">{{$t('iot_platform')}}</el-menu-item>
+  <el-menu-item index="2" class="webname" @click="goToAccountpage">{{$t('iot_platform')}}</el-menu-item>
 
 </el-menu>
 </template>
@@ -45,6 +45,11 @@ export default {
       this.setUsername('')
       this.$router.push({ name: 'login' })
     },
+
+    goToAccountpage(){
+      this.$router.push({ name: 'account' }).catch(()=>{})
+    },
+
     getData () {
       this.handleRequest({
         name: 'account/detail/',
@@ -58,6 +63,7 @@ export default {
     },
 
   },
+
   mounted(){
     if(this.token){
       if(!this.username) {

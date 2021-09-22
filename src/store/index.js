@@ -10,7 +10,8 @@ const getDefaultState = () => {
   return {
     tokenScope: '',
     username: '',
-    token: localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || '',
+    channel_name: localStorage.getItem('channel_name') || ''
   }
 }
 
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_TOKEN (state, token) {
     state.token = token
+  },
+  SET_CHANNEL_NAME (state, channel_name) {
+    state.channel_name = channel_name
   },
 }
 

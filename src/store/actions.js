@@ -1,8 +1,8 @@
 import API from '../api/api-class'
 const protocol = 'http:'
 // Smart api calls
-// const myAPI = new API({ url: `${protocol}//sarash99.pythonanywhere.com/api` })
-const myAPI = new API({ url: `${protocol}//127.0.0.1:8000/api` })
+const myAPI = new API({ url: `${protocol}//sarash99.pythonanywhere.com/api` })
+// const myAPI = new API({ url: `${protocol}//127.0.0.1:8000/api` })
 
 export const handleRequestResponse = async ({ commit }, { mutation, request }) => {
   commit(mutation, await request)
@@ -40,5 +40,9 @@ export const setUsername = async ({ commit }, username) => {
 export const setToken = ({ commit }, token) => {
   localStorage.setItem('token', token)
   commit('SET_TOKEN', token)
+}
+export const setChannelName = ({ commit }, channel_name) => {
+  localStorage.setItem('channel_name', channel_name)
+  commit('SET_CHANNEL_NAME', channel_name)
 }
 

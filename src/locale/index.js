@@ -32,7 +32,7 @@ export const messages = {
 
     //account
     my_channels: 'کانال‌ها',
-    new_channel: '+ کانال جدید',
+    new_channel: 'کانال جدید +',
     no_channel_error: 'کانالی موجود نیست',
 
     //channel form
@@ -49,6 +49,15 @@ export const messages = {
     //view channel
     chart_view: 'نمایش نمودار',
     table_view:'نمایش جدولی',
-    api_key: 'api key'
+    api_key: 'دریافت کلید API',
+    generate_new_api_key: 'ساخت کلید API جدید',
+    your_api_key: 'جدید API کلید',
+
+    //table
+    hour:'ساعت',
+    date:'تاریخ',
+
+    //chart
+    show_chart_from : 'نمایش داده‌ها از تاریخ'
   }
 }

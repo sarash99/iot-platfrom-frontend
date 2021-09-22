@@ -23,6 +23,8 @@ textarea {
   font-family: $--font-primary;
 }
 
+
+
 a {
   text-decoration: unset;
   color: $--color-primary;
@@ -86,4 +88,10 @@ a {
   .el-tooltip__popper.is-dark {
     max-width: 15rem;
   }
+}
+
+.el-button--primary {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
 }

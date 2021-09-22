@@ -1,5 +1,5 @@
 <template>
-<div class="flexbox full-height align-center justify-center form-background">
+<div class="flexbox full-height align-center justify-center form-background" v-loading.fullscreen.lock="loading">
 <el-card class="form flexbox justify-center">
   <el-form :label-position="labelPosition" label-width="100px" :model="ruleForm" :rules="rules" ref="ruleForm">
     <p v-if="incorrect" class="error">{{$t('incorrect_pass_or_username_error')}}</p>
@@ -40,6 +40,7 @@ export default {
 
     return{
 
+      loading : true,
       labelPosition: 'top',
       incorrect: false,
 
@@ -110,11 +111,34 @@ export default {
       }).catch(()=>{
         this.incorrect=true;
       })     
-    }, 
+    },
 
+    getUserData () {
+      this.handleRequest({
+        name: 'account/detail/',
+        action: 'getAll'
+      }).then((res) => {
+        this.setUsername(res.username)
+        this.$router.push({ name: 'account' })    
+      }).finally(() => {
+        this.loading= false
+      })
+    },
 
+  },
+  beforeMount(){
 
+    if(this.token){
+      if(!this.username) {
+        this.getUserData(); 
+      }else{
+        this.loading = false
+      }            
+    }else{
+      this.loading = false
+    }
   }
+  
 }
 </script>
 

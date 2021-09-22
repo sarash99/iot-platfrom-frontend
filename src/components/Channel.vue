@@ -24,7 +24,11 @@ export default {
         }
     },
     methods:{
-        showChannel(){
+        ...mapActions([
+            'setChannelName'
+        ]),
+        showChannel(){ 
+            this.setChannelName(this.channel_name)
             this.$router.push({name:'channel-view', params: { channel_name: this.channel_name}})
         }
     },

@@ -1,11 +1,11 @@
 <template>
-<div class="flexbox full-height align-center justify-center form-background">
+<div class="flexbox full-height align-center justify-center form-background" v-loading.fullscreen.lock="loading">
 <el-card class="form flexbox justify-center">
   <el-form :label-position="labelPosition" label-width="100px" :model="ruleForm" :rules="rules" ref="ruleForm">
-    <el-form-item prop="username">
+    <el-form-item prop="username_input">
       <label>{{$t('username')}}</label>
       <p v-if="usernameError" class="error">{{$t('not_unique_username_error')}}</p>
-      <el-input v-model="ruleForm.username"></el-input>
+      <el-input v-model="ruleForm.username_input"></el-input>
     </el-form-item>
     <el-form-item prop="email">
       <label>{{$t('email')}}</label>
@@ -71,13 +71,13 @@ export default {
     }
 
     return{
-
+      loading : true,
       labelPosition: 'top',
       usernameError: false,
       emailError: false,
 
       ruleForm: {
-        username: '',
+        username_input: '',
         password: '',
         email: ''
       },
@@ -88,11 +88,18 @@ export default {
         password:[
           { validator: checkPassword, trigger: 'blur' }
         ],
-        username:[
+        username_input:[
           { required: true, message: this.$i18n.t('blank_username_error'), trigger: 'blur' }
         ]
       }
     }
+  },
+  
+  computed: {
+    ...mapGetters([
+      'username',
+      'token'
+    ])
   },
 
   methods:{
@@ -128,14 +135,14 @@ export default {
       let formData=new FormData();
       formData.append('email',this.ruleForm.email);
       formData.append('password',this.ruleForm.password);
-      formData.append('username',this.ruleForm.username);
+      formData.append('username',this.ruleForm.username_input);
       this.handleRequest({
         name:'account/register/',
         action:'create',
         data:formData,
       }).then((res)=>{
         this.setToken(res.token);     
-        this.setUsername(this.ruleForm.username);
+        this.setUsername(this.ruleForm.username_input);
         this.$router.push({ name: 'account'});     
       }).catch((res)=>{ 
 
@@ -148,9 +155,29 @@ export default {
         
       })
     },
+    getUserData () {
+      this.handleRequest({
+        name: 'account/detail/',
+        action: 'getAll'
+      }).then((res) => {
+        this.setUsername(res.username)
+        this.$router.push({ name: 'account' })    
+      }).finally(() => {
+        this.loading= false
+      })
+    }
+  },
+  beforeMount(){
 
-
-
+    if(this.token){
+      if(!this.username) {
+        this.getUserData(); 
+      }else{
+        this.loading = false
+      }            
+    }else{
+      this.loading = false
+    }
   }
 }
 </script>

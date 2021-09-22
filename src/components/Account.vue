@@ -20,7 +20,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import TopNav from '@/components/TopNav'
 import Channel from '@/components/Channel'
-import ChannelForm from './ChannelForm.vue'
+import ChannelForm from './channel/ChannelForm.vue'
 export default {
     name: 'account',
     computed: {

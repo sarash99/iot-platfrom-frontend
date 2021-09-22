@@ -1,7 +1,7 @@
 .channels{
-    margin-right: 10%;
+    margin-right: 15%;
     margin-top: 7rem;
-    width: 80%;
+    width: 70%;
     .new_channel_button{
         width:100px;
         height: 40px;
@@ -20,26 +20,90 @@
         }
     }
 }
+
 .channel{
     width:60rem;
     margin-bottom: 2rem;
-
-
 }
+
 .channel-view{
     width: 70%;
     position: relative;
     right: 15%;
-    top: 7rem;    
-    display: flex;
-    flex-direction: column;
-    // .el-menu--horizontal > .el-menu-item {
-    //     float: inline-start;
-    // }
-    // .el-menu--horizontal > .el-submenu {
-    //     float: inline-start;
-    // }
-    .el-menu{
-        display: flex;
+    top: 3rem;    
+
+    .channel_descriptions{
+        position: relative;
+        left: 40%;
+        transform: translate(-50%, 0%);
+    }
+    .feeds_section{
+        padding-top: 3rem;
+        width: 80%;
+
+        .el-tabs__nav {
+            float: right;
+        }
+        .el-tabs--border-card {
+            min-height: 35rem;
+            min-width: 100%;
+            margin-bottom: 10rem;
+        }
+        .el-tabs--border-card > .el-tabs__content {
+            min-height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            right: 10%;
+        }
+
+        .channel_table {
+            height: 40rem; //might change it later
+            margin-top:3rem;
+            .el-table__body, .el-table__footer, .el-table__header{
+                width :inherit !important;
+                min-height: inherit;
+            }
+            .el-tabs__content {
+                width: 80%;
+                right: 10%;
+                margin-top: 3rem;
+            }
+            .el-tab-pane{
+    
+            }
+            .el-table__empty-block {
+                width: inherit !important;
+            }
+        }
+
+        .generate_api_key{
+
+        }
+
+        .channel_chart{
+            // height: 20rem;
+            .apexcharts-toolbar {
+                direction: ltr;
+            }
+        }
+    }
+
+
+}
+
+.el-message-box {
+    text-align: right !important;
+}
+.el-message-box__headerbtn {
+    left: 15px;
+    right: unset;
+}
+
+.el-message-box__btns {
+    text-align: center;
+    .el-button {
+        width: 3rem;
     }
 }
