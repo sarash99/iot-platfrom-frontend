@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="loading">
         <topnav ref="top" ></topnav>
         <div class="channels">
             <div class="flexbox row-direction justify-between">
@@ -36,6 +36,7 @@ export default {
     },
     data(){
         return {
+            loading :true,
             channelFormVisible:false,
             user_channels: [],
             no_channel_error :false,
@@ -60,10 +61,14 @@ export default {
                 }else{
                     this.no_channel_error = false
                 }
-            }).catch((res)=>{
-                
-                console.log(res)
-            }) 
+            }).catch(()=>{
+                this.$message({
+                    type: 'warning',
+                    message: this.$t('a_problem_try_again')
+                })
+            }).finally(()=>{
+                this.loading = false
+            })
         },
         updateChannelList(){
             this.channelFormVisible=false;

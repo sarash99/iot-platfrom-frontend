@@ -3,15 +3,15 @@
     <topnav ref="top"></topnav>
     <div class="channel-view flexbox column-direction align-center justify-center">
         <div class="channel_descriptions">
-            <h2>{{channel.channel_name}}</h2>   
+            <h2>{{channel.channel_name}}</h2>
         </div>
         <div class="feeds_section flexbox align-center justify-center">
             <el-tabs type="border-card">
                 <el-tab-pane :label="this.$t('table_view')">
-                    <channel_table :channel="channel" :feeds="feeds" v-if="channel.channel_name"/>
+                    <channel_table :channel="channel"  v-if="channel.channel_name"/>
                 </el-tab-pane>
                 <el-tab-pane :label="this.$t('chart_view')">
-                    <channel_chart :channel="channel" :feeds="feeds" v-if="channel.channel_name"/>
+                    <channel_chart :channel="channel"  v-if="channel.channel_name"/>
                 </el-tab-pane>
                 <el-tab-pane :label="this.$t('api_key')">
                     <generate_api_key  :channel="channel"/>
@@ -34,7 +34,6 @@ export default {
     data(){
         return {
             channel:{},
-            feeds: [], 
         }
     },
     components:{
@@ -62,10 +61,12 @@ export default {
                 action:'getAll',
             }).then((res)=>{
                 this.channel = res.channel;
-                this.feeds = res.feeds;
-            }).catch((res)=>{
-                // console.log(res)
-            }) 
+            }).catch(()=>{
+                this.$message({
+                    type: 'warning',
+                    message: this.$t('a_problem_try_again')
+                })
+            })
         },
  
         getData(){

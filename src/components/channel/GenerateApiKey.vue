@@ -1,6 +1,8 @@
 <template>
   <div class="generate_api_key flexbox  column-direction align-center justify-center justify-between">
-      <el-button type="primary" @click="generate_api_key">{{$t('generate_new_api_key')}}</el-button>
+      <el-button type="primary" style="background-color: rgb(0, 172, 193)"
+      @click="generate_api_key">{{$t('generate_new_api_key')}}</el-button>
+      <!-- <el-link type="success" @click="generate_api_key">{{$t('generate_new_api_key')}}</el-link> -->
   </div>
 </template>
 

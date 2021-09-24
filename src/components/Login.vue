@@ -12,7 +12,7 @@
       <el-input v-model="ruleForm.password" type="password"></el-input>
     </el-form-item>
     <el-form-item class="mt-2-rem flexbox justify-center">
-      <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('login') }}</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')" :loading="sending">{{ $t('login') }}</el-button>
     </el-form-item>
     <router-link class="mt-1-rem flexbox justify-center link" to="signup">{{ $t('signup') }}</router-link>
   </el-form>
@@ -39,7 +39,7 @@ export default {
     }  
 
     return{
-
+      sending : false,
       loading : true,
       labelPosition: 'top',
       incorrect: false,
@@ -98,6 +98,7 @@ export default {
 
     sendRequest:function(){
       this.clearErrors();
+      this.sending = true
       let formData=new FormData();
       formData.append('password',this.ruleForm.password);
       formData.append('email',this.ruleForm.email);
@@ -110,6 +111,8 @@ export default {
         this.$router.push({ name: 'account'});
       }).catch(()=>{
         this.incorrect=true;
+      }).finally(()=>{
+        this.sending= false
       })     
     },
 
@@ -126,7 +129,8 @@ export default {
     },
 
   },
-  beforeMount(){
+  
+  mounted(){
 
     if(this.token){
       if(!this.username) {

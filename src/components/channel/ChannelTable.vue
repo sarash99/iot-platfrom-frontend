@@ -1,13 +1,13 @@
 <template>
-  <div class="channel_table flexbox  column-direction align-center justify-center justify-between">
-    <el-table :data="filteredFeeds" empty-text="no data" height="30rem" v-loading="loading">
+  <div class="channel_table flexbox  column-direction align-center justify-center justify-between" v-loading="loading">
+    <el-table :data="filteredFeeds" empty-text="no data" height="25rem">
         <el-table-column
         header-align="center"
         align="center"
         v-if="channel.field1"
         prop="field1"
         :label=channel.field1
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -16,7 +16,7 @@
         v-if = "channel.field2"
         prop="field2"
         :label=channel.field2
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -25,7 +25,7 @@
         v-if="channel.field3"
         prop="field3"
         :label=channel.field3
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column       
@@ -34,7 +34,7 @@
         v-if="channel.field4"
         prop="field4"
         :label=channel.field4
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -43,7 +43,7 @@
         v-if="channel.field5"
         prop="field5"
         :label=channel.field5
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -52,7 +52,7 @@
         v-if="channel.field6"
         prop="field6"
         :label=channel.field6
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -61,7 +61,7 @@
         v-if="channel.field7"
         prop="field7"
         :label=channel.field7
-        width="10%">
+        >
         </el-table-column>
         
         <el-table-column
@@ -70,7 +70,7 @@
         v-if="channel.field8"
         prop="field8"
         :label=channel.field8
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -78,7 +78,7 @@
         align="center"
         prop="created_at_date"
         :label="$t('date')"
-        width="10%">
+        >
         </el-table-column>
 
         <el-table-column
@@ -86,7 +86,7 @@
         align="center"
         prop="created_at_time"
         :label="$t('hour')"
-        width="10%">
+        >
         </el-table-column>
 
     </el-table>
@@ -155,11 +155,13 @@ export default {
                 name:`channel/${this.channel.channel_name}/get-page-feeds/${this.current_page}/`,
                 action:'getAll',
             }).then((res)=>{
-                console.log(res)
                 this.count = res.count;
                 this.feeds = res.feeds;
             }).catch((res)=>{
-                console.log(res)
+                this.$message({
+                    type: 'warning',
+                    message: this.$t('a_problem_try_again')
+                })
             }).finally(()=>{
                 this.deleteNullFieldsinFeeds()
                 this.loading=false

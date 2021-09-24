@@ -25,7 +25,7 @@ Vue.use(VuePersianDatetimePicker, {
     format: 'jYYYY-jMM-jDD HH:mm',
     editable: false,
     inputClass: 'form-control my-custom-class-name',
-    placeholder: 'Please select a date',
+    placeholder:'زمان شروع نمایش داده‌ها',
     altFormat: 'YYYY-MM-DD HH:mm',
     color: '#00acc1',
     autoSubmit: false,

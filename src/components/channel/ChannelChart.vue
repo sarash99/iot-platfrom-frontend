@@ -1,5 +1,5 @@
 <template>
-  <div class="channel_chart flexbox  column-direction align-center justify-center justify-between">
+  <div class="channel_chart flexbox  column-direction align-center justify-center justify-between" v-loading="loading">
     <div style="margin-top:3rem">
         <div class="flexbox  row-direction align-center justify-center justify-between">
             <el-select v-model="value" placeholder="Select" @change="createChartData">
@@ -17,9 +17,13 @@
         <el-divider></el-divider>
     </div>
     <div style="margin-top:3rem">
-        <apexchart width="100%" type="line" :options="chart_options" :series="series" v-if="data_loaded"></apexchart>
+        <apexchart width="100%" 
+        type="line" 
+        :options="chart_options" 
+        :series="series"
+        class="ltr"
+         v-if="data_loaded"></apexchart>
     </div>
-    <p>{{date}}</p>
   </div>
 </template>
 
@@ -30,6 +34,8 @@ export default {
     name: 'channel-table',
     data(){
         return {
+            loading:false,
+            feeds:[],
             filteredFeeds:[],     
             options: [],
             value: '',
@@ -37,11 +43,11 @@ export default {
             series:[],
             chart_options:{},
             data_loaded :false,
-            date :''
+            date :'',
+            fa : require("apexcharts/dist/locales/fa.json"),
         }
     },
     props:{
-        feeds:[],
         channel:{}
     },
 
@@ -50,7 +56,7 @@ export default {
             'handleRequest',
         ]),
 
-        async createOptions(){
+        createOptions(){
             for(var i=1; i<=8; i++){
                 var fieldName = 'field'+(i)
                 if(this.channel[fieldName] != null){
@@ -72,7 +78,8 @@ export default {
             var field = this.channel[this.value]
             for (var i =0 ;i<this.filteredFeeds.length; i++){
                 data.push(this.filteredFeeds[i][this.value])
-                categories.push(this.filteredFeeds[i]['created_at'])
+                var time = this.converToShamsi(this.filteredFeeds[i]['created_at'])
+                categories.push(time)
             }
 
             this.series =[{
@@ -82,21 +89,28 @@ export default {
 
             this.chart_options={
                 chart: {
-                    id: 'vuechart-example'
+                    id: 'vuechart-example',
+                    locales: [this.fa],
+                    defaultLocale: 'fa',
                 },
                 xaxis: {
                     categories: categories,
                     type:'datetime',
-                }
+                    labels:{
+                        datetimeUTC: false,
+                    } ,
+                },
+                colors: ['#f25a5a']
+                
             }
 
             this.data_loaded=true
-
         },
 
         
 
-        async deleteNullFieldsinFeeds(){
+        deleteNullFieldsinFeeds(){
+            
             for(var i = 0; i < this.feeds.length; i++){
                 var feed = this.feeds[i]
                 var filteredFeed = {}
@@ -112,42 +126,73 @@ export default {
                 this.filteredFeeds.push(filteredFeed)
             }
         },
+
         showTime () {
-            var d = {
+            this.loading = true
+            var s_datetime = {
                 filter_datetime:''
             }
-            if (this.date.length > 0) {
-                
-                d.filter_datetime= moment(this.date,'jYYYY-jMM-jDD HH:mm').format('YYYY-MM-DD HH:mm')
-                
-                
-
+            if (this.date.length > 0) {              
+                s_datetime.filter_datetime= moment(this.date,'jYYYY-jMM-jDD HH:mm').format('YYYY-MM-DD HH:mm')
             }
-            console.log(
-            this.date
-            )
 
+            this.feeds = []
+            this.filteredFeeds =[]
             this.handleRequest({                              
                 name:`channel/${this.channel.channel_name}/get-filtered-feeds/`,
                 action:'getAll',
                 data: {
-                    query: d
+                    query: s_datetime
                 }
             }).then((res)=>{
-                console.log('filtered')
-                console.log(res)
+                this.feeds = res.feeds
+                this.deleteNullFieldsinFeeds()
+                this.createChartData()
             }).catch((res)=>{
-                console.log(res)
+                this.$message({
+                    type: 'warning',
+                    message: this.$t('a_problem_try_again')
+                })
+            }).finally(()=>{
+                this.loading= false
             })
         },
+
+        getChartInitialFeeds(){
+            this.loading=true
+            this.filteredFeeds = []
+            this.feeds = []
+            this.filteredFeeds =[]
+            this.handleRequest({                              
+                name:`channel/${this.channel.channel_name}/get-page-feeds/1/`,
+                action:'getAll',
+            }).then((res)=>{
+                this.feeds = res.feeds
+                this.deleteNullFieldsinFeeds()
+                this.createOptions()
+                this.createChartData()
+            }).catch(()=>{
+                this.$message({
+                    type: 'warning',
+                    message: this.$t('a_problem_try_again')
+                })
+            }).finally(()=>{
+                this.loading = false
+            })
+
+        },
+
+        converToShamsi(time){
+            var date = time.substring(0,10)
+            var shamsidate =  moment(date,'YYYY-MM-DD').format('jYYYY-jMM-jDD')
+            return shamsidate+time.substring(10)
+        },  
 
 
     },
 
     mounted(){
-        this.deleteNullFieldsinFeeds(this.feeds)
-        this.createOptions()
-        this.createChartData()
+        this.getChartInitialFeeds()
     }
 
 

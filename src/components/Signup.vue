@@ -17,7 +17,7 @@
       <el-input v-model="ruleForm.password" type="password"></el-input>
     </el-form-item>
     <el-form-item class="mt-2-rem flexbox justify-center">
-      <el-button type="primary" @click="submitForm('ruleForm')">{{ $t('confirm') }}</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')" :loading="sending">{{ $t('confirm') }}</el-button>
     </el-form-item>
     <router-link class="mt-1-rem flexbox justify-center link" to="/">{{ $t('login') }}</router-link>
   </el-form>
@@ -71,6 +71,7 @@ export default {
     }
 
     return{
+      sending: false,
       loading : true,
       labelPosition: 'top',
       usernameError: false,
@@ -132,6 +133,7 @@ export default {
 
     sendRequest:function(){
       this.clearErrors();
+      this.sending = true;
       let formData=new FormData();
       formData.append('email',this.ruleForm.email);
       formData.append('password',this.ruleForm.password);
@@ -145,14 +147,15 @@ export default {
         this.setUsername(this.ruleForm.username_input);
         this.$router.push({ name: 'account'});     
       }).catch((res)=>{ 
-
+        
         if(Object.prototype.hasOwnProperty.call(res.response.data,'username')){
           this.usernameError=true;
         }
         if(Object.prototype.hasOwnProperty.call(res.response.data,'email')){           
-            this.emailError=true;            
+            this.emailError=true;           
         }
-        
+      }).finally(()=>{
+           this.sending = false
       })
     },
     getUserData () {
@@ -162,12 +165,12 @@ export default {
       }).then((res) => {
         this.setUsername(res.username)
         this.$router.push({ name: 'account' })    
-      }).finally(() => {
+      }).finally(() => {      
         this.loading= false
       })
     }
   },
-  beforeMount(){
+  mounted(){
 
     if(this.token){
       if(!this.username) {

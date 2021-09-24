@@ -25,6 +25,7 @@ export const messages = {
     invalid_email_error: 'لطفا ایمیل معتبر وارد کنید',
     not_unique_email_error: 'عضوی با این آدرس ایمیل وجود دارد',
     incorrect_pass_or_username_error: 'رمز عبور و یا نام کاربری اشتباه است',
+    a_problem_try_again: 'مشکلی پیش آمده، مجددا امتحان کنید',
 
     //top nav
     logout:'خروج',
@@ -58,6 +59,7 @@ export const messages = {
     date:'تاریخ',
 
     //chart
-    show_chart_from : 'نمایش داده‌ها از تاریخ'
+    show_chart_from : 'نمایش داده‌ها از تاریخ',
+    select_start_date: 'زمان شروع نمایش داده‌ها'
   }
 }
